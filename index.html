@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>360° Tour - Fixed</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css"/>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+        #panorama {
+            width: 100%;
+            height: 100%;
+        }
+        
+        /* --- Custom Hotspot Styling --- */
+        .pnlm-hotspot.custom-hotspot {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(0, 150, 255, 0.7);
+            border: 2px solid white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            transition: transform 0.3s, background 0.3s;
+            z-index: 10;
+        }
+        .pnlm-hotspot.custom-hotspot:hover {
+            transform: scale(1.2);
+            background: rgba(0, 190, 255, 0.9);
+        }
+        /* This is just to make the default '+' icon white inside our custom hotspot */
+        .pnlm-hotspot .pnlm-sprite {
+            background-color: white !important;
+            width: 20px !important;
+            height: 20px !important;
+            border-radius: 50% !important;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="panorama"></div>
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
+
+    <script>
+        pannellum.viewer('panorama', {
+            "default": {
+                "firstScene": "entranceHall",
+                "author": "Guaranteed Demo",
+                "sceneFadeDuration": 1500,
+                "autoLoad": true,
+                "compass": true,
+                "northOffset": 240,
+                "autoRotate": -2,
+                "autoRotateInactivityDelay": 2000
+            },
+
+            "scenes": {
+                "entranceHall": {
+                    "title": "Entrance Hall",
+                    "hfov": 110,
+                    "yaw": 5,
+                    "type": "equirectangular",
+                    "panorama": "./images/room1.jpg",
+                    "hotSpots": [
+                        {
+                            "pitch": -10,
+                            "yaw": -160,
+                            "type": "scene",
+                            "text": "Go to the West Gallery",
+                            "sceneId": "westGallery"
+                        },
+                        {
+                            "pitch": 0,
+                            "yaw": 50,
+                            "type": "scene",
+                            "text": "Visit the Annex",
+                            "sceneId": "annex"
+                        }
+                    ]
+                },
+
+                "westGallery": {
+                    "title": "West Gallery",
+                    "hfov": 110,
+                    "yaw": 5,
+                    "type": "equirectangular",
+                    "panorama": "./images/bedroom1.jpg",
+                    "hotSpots": [
+                        {
+                            "pitch": -3,
+                            "yaw": -30,
+                            "type": "scene",
+                            "text": "Return to Entrance Hall",
+                            "sceneId": "entranceHall",
+                            "targetYaw": -150,
+                            "targetPitch": 0
+                        }
+                    ]
+                },
+                
+                "annex": {
+                    "title": "Gallery Annex",
+                    "hfov": 110,
+                    "yaw": 0,
+                    "type": "equirectangular",
+                    "panorama": "./images/living room.jpg",
+                    "hotSpots": [
+                        {
+                            "pitch": -4,
+                            "yaw": -170,
+                            "type": "scene",
+                            "text": "Back to West Gallery",
+                            "sceneId": "westGallery",
+                            "targetYaw": 110
+                        }
+                    ]
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>
